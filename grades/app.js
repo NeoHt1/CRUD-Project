@@ -13,15 +13,27 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // MongoDB connections
-const studentDB = mongoose.createConnection(process.env.MONGODB_URI_STUDENT, { useNewUrlParser: true, useUnifiedTopology: true });
-const courseDB = mongoose.createConnection(process.env.MONGODB_URI_COURSE, { useNewUrlParser: true, useUnifiedTopology: true });
+const studentDB = mongoose.createConnection(
+  'mongodb+srv://jordant:joJooDTyfSaK0JM0@database.setz1rz.mongodb.net/School?retryWrites=true&w=majority&appName=Database'
+);
+const courseDB = mongoose.createConnection(
+  'mongodb+srv://jordant:joJooDTyfSaK0JM0@database.setz1rz.mongodb.net/Course?retryWrites=true&w=majority&appName=Database'
+);
 
 studentDB.on('connected', () => {
   console.log('Connected to student database');
 });
 
+studentDB.on('error', (err) => {
+  console.error('Error connecting to student database:', err);
+});
+
 courseDB.on('connected', () => {
   console.log('Connected to course database');
+});
+
+courseDB.on('error', (err) => {
+  console.error('Error connecting to course database:', err);
 });
 
 // Pass the connections to the models
