@@ -1,16 +1,30 @@
-const mongoose = require('mongoose');
-
-// Use the courseDB connection
-const courseDB = mongoose.createConnection(
-  'mongodb+srv://jordant:joJooDTyfSaK0JM0@database.setz1rz.mongodb.net/Course?retryWrites=true&w=majority&appName=Database', 
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
-const Grade = require('../models/Grade')(courseDB);
-
-const getGrades = async (req, res) => {
+const getGrades = async (req, res, courseDB) => {
+  const Grade = courseDB.model('Grade');
   const { studentID } = req.params;
   const grades = await Grade.find({ studentID });
   res.json(grades);
 };
 
-module.exports = { getGrades };
+const createGrade = async (req, res, courseDB) => {
+  const Grade = courseDB.model('Grade');
+  const grade = new Grade(req.body);
+  await grade.save();
+  res.status(201).json(grade);
+};
+
+const updateGrade = async (req, res, courseDB) => {
+  const Grade = courseDB.model('Grade');
+  const { studentID } = req.params;
+  const updateData = req.body;
+  const grade = await Grade.findOneAndUpdate({ studentID }, updateData, { new: true });
+  res.json(grade);
+};
+
+const deleteGrade = async (req, res, courseDB) => {
+  const Grade = courseDB.model('Grade');
+  const { studentID } = req.params;
+  await Grade.findOneAndDelete({ studentID });
+  res.status(204).send();
+};
+
+module.exports = { getGrades, createGrade, updateGrade, deleteGrade };

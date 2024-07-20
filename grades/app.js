@@ -37,12 +37,12 @@ courseDB.on('error', (err) => {
 });
 
 // Pass the connections to the models
-require('./models/Student')(studentDB);
-require('./models/Grade')(courseDB);
+const Student = require('./models/Student')(studentDB);
+const Grade = require('./models/Grade')(courseDB);
 
 // Routes
-app.use('/api/students', studentRoutes);
-app.use('/api/grades', gradeRoutes);
+app.use('/api/students', studentRoutes(studentDB));
+app.use('/api/grades', gradeRoutes(courseDB));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
