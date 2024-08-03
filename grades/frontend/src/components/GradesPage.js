@@ -1,7 +1,7 @@
 // src/components/Grades.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Grades.css';
+import './GradesPage.css';
 
 const Grades = () => {
   const [grades, setGrades] = useState([]);

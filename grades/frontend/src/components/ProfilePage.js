@@ -1,18 +1,45 @@
-// src/components/ProfilePic.js
-import React from 'react';
-import './ProfilePic.css';
+// src/components/ProfilePage.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './ProfilePage.css'; // Ensure this file exists for styling
 
-const ProfilePic = ({ imageUrl, name }) => {
+const ProfilePage = () => {
+  const [profile, setProfile] = useState({
+    name: '',
+    studentID: '',
+    password: ''
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/profile'); // Adjust to your backend URL
+        setProfile(response.data);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="profile-container">
-      <div className="profile-image">
-        <img src={imageUrl} alt={name} />
-      </div>
-      <div className="profile-info">
-        <h2>{name}</h2>
+    <div className="profile-page">
+      <h1>Profile Page</h1>
+      <div className="profile-details">
+        <p><strong>Name:</strong> {profile.name}</p>
+        <p><strong>Student ID:</strong> {profile.studentID}</p>
+        <p><strong>Password:</strong> {profile.password}</p>
       </div>
     </div>
   );
 };
 
-export default ProfilePic;
+export default ProfilePage;

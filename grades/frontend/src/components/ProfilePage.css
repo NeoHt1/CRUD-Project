@@ -1,0 +1,46 @@
+.profile-container {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px;
+}
+
+.profile-image {
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.profile-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-info h2 {
+  font-size: 24px;
+  color: #3c00a0;
+}
+/* src/components/ProfilePage.css */
+
+.profile-page {
+  padding: 20px;
+  background: #f4f4f4;
+  min-height: 100vh;
+}
+
+.profile-details {
+  margin-top: 20px;
+}
+
+.profile-details p {
+  font-size: 18px;
+  color: #333;
+}
+
+.profile-details strong {
+  color: #3c00a0;
+}
