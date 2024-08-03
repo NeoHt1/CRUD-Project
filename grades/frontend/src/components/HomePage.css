@@ -1,0 +1,91 @@
+/* src/components/HomePage.css */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+  }
+  
+  .homepage-container {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(74, 74, 190, 0.8), rgba(0, 0, 50, 0.8)), url('back.jpeg');
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #3c00a0;
+    color: #fff;
+    padding: 15px 30px;
+  }
+  
+  .navbar-logo a {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-image {
+    width: 120px; /* Adjust size as needed */
+    height: auto;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+  }
+  
+  .navbar-links li {
+    margin-left: 20px;
+  }
+  
+  .navbar-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+  }
+  
+  .navbar-links a:hover {
+    color: #eaeaea;
+  }
+  
+  .welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: calc(100vh - 80px); /* Adjust height to account for navbar */
+    color: #fff;
+  }
+  
+  .welcome-container h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-container p {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .cta-button {
+    background: #3c00a0;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background 0.3s;
+  }
+  
+  .cta-button:hover {
+    background: #2a007a;
+}  
