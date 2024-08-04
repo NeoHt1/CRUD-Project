@@ -1,3 +1,4 @@
+// routes/studentRoutes.js
 const express = require('express');
 const { registerStudent, loginStudent, getStudents, updateStudent, deleteStudent } = require('../controllers/studentController');
 

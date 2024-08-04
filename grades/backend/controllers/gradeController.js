@@ -1,3 +1,4 @@
+// controllers/gradeController.js
 const getGrades = async (req, res, courseDB) => {
   const Grade = courseDB.model('Grade');
   const { studentID } = req.params;

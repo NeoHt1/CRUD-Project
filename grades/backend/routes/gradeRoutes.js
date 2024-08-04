@@ -1,3 +1,4 @@
+// routes/gradeRoutes.js
 const express = require('express');
 const { getGrades, createGrade, updateGrade, deleteGrade } = require('../controllers/gradeController');
 const authMiddleware = require('../middleware/authMiddleware');

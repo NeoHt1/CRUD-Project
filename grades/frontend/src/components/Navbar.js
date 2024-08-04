@@ -5,7 +5,12 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
-  const isLoggedIn = !!localStorage.getItem('token'); // Check if token exists
+  const isLoggedIn = !!localStorage.getItem('token');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  };
 
   return (
     <nav>
@@ -13,10 +18,7 @@ const Navbar = () => {
       {isLoggedIn ? (
         <>
           <Link to="/profile">My Profile</Link>
-          <button onClick={() => {
-            localStorage.removeItem('token');
-            window.location.href = '/';
-          }}>Sign Out</button>
+          <button onClick={handleLogout}>Sign Out</button>
         </>
       ) : (
         <>

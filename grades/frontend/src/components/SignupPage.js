@@ -1,8 +1,8 @@
 // src/components/SignupPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import axios
-import './SignupPage.css'; // Import the CSS file
+import { signup, signin } from '../api/auth';
+import './SignupPage.css';
 
 const SignupPage = () => {
   const [isSignup, setIsSignup] = useState(true);
@@ -24,13 +24,12 @@ const SignupPage = () => {
 
     try {
       if (isSignup) {
-        // Post data to your backend API
-        await axios.post('http://localhost:5000/api/signup', { name, studentID, password });
-        navigate('/profile'); // Redirect to profile page after successful submission
+        await signup({ name, studentID, password });
+        navigate('/signin');
       } else {
-        // Handle Sign In Logic
-        // Example: await axios.post('http://localhost:5000/api/signin', { studentID, password });
-        navigate('/profile'); // Redirect to profile page after successful submission
+        const response = await signin({ studentID, password });
+        localStorage.setItem('token', response.data.token);
+        navigate('/profile');
       }
     } catch (error) {
       console.error('There was an error!', error);
@@ -84,7 +83,7 @@ const SignupPage = () => {
               Sign in
             </button>
           </div>
-          <br></br>
+          <br />
           <button type="submit">Submit</button>
         </form>
       </div>

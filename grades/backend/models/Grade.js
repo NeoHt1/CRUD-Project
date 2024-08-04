@@ -1,3 +1,4 @@
+// models/Grade.js
 const mongoose = require('mongoose');
 
 const gradeSchema = new mongoose.Schema({
