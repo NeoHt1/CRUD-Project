@@ -13,7 +13,8 @@ const Navbar = () => {
         </Link>
       </div>
       <ul className="navbar-links">
-        <li><Link to="/signup">Sign Up/Sign In</Link></li>
+        <li><Link to="/signup">Sign Up</Link></li>
+        <li><Link to="/signin">Sign In</Link></li>
         <li><Link to="/profile">Profile</Link></li>
         <li><Link to="/grades">Grades</Link></li> {/* Add more links as needed */}
       </ul>

@@ -1,11 +1,10 @@
-// src/components/SignupPage.js
+// src/components/SigninPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup } from '../api/auth'; // Import the signup function from the API module
-import './SignupPage.css'; // Import the CSS file
+import { signin } from '../api/auth'; // Import the signin function from the API module
+import './SignupPage.css'; // Use the same CSS file
 
-const SignupPage = () => {
-  const [name, setName] = useState('');
+const SigninPage = () => {
   const [studentID, setStudentID] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -14,9 +13,10 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      // Post data to the backend API for signup
-      await signup({ name, studentID, password });
-      navigate('/signin'); // Redirect to signin page after successful signup
+      // Post data to the backend API for signin
+      const response = await signin({ studentID, password });
+      localStorage.setItem('token', response.data.token); // Save token to local storage
+      navigate('/profile'); // Redirect to profile page after successful signin
     } catch (error) {
       console.error('There was an error!', error);
     }
@@ -25,20 +25,8 @@ const SignupPage = () => {
   return (
     <div className="container">
       <div className="form-box">
-        <h1 id="title">Sign Up</h1>
+        <h1 id="title">Sign In</h1>
         <form onSubmit={handleSubmit}>
-          <div className="input-group show">
-            <div className="input-field">
-              <i className="fa-solid fa-user"></i>
-              <input 
-                type="text" 
-                placeholder="Name" 
-                value={name} 
-                onChange={(e) => setName(e.target.value)} 
-                required 
-              />
-            </div>
-          </div>
           <div className="input-field">
             <i className="fa-solid fa-envelope"></i>
             <input 
@@ -68,4 +56,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SigninPage;

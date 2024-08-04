@@ -1,44 +1,49 @@
 // src/components/ProfilePage.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../contexts/AuthContext';
-import './ProfilePage.css';
+import { useAuth } from '../contexts/AuthContext'; // Import your authentication context
+import './ProfilePage.css'; // Ensure this file exists for styling
 
 const ProfilePage = () => {
-  const [profile, setProfile] = useState({
-    name: '',
-    studentID: '',
-    password: ''
-  });
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { isAuthenticated, user } = useAuth();
+  const [error, setError] = useState(null);
+  const { isAuthenticated } = useAuth(); // Extract authentication status
 
   useEffect(() => {
     if (!isAuthenticated) {
-      window.location.href = '/signin';
+      window.location.href = '/signin'; // Redirect to signin if not authenticated
       return;
     }
 
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`/api/students/${user.studentID}`, {
+        const response = await axios.get('/api/profile', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
         setProfile(response.data);
       } catch (error) {
-        console.error('Error fetching profile data:', error);
+        setError('Error fetching profile data');
       } finally {
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated]);
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!profile) {
+    return <div>No profile data available</div>;
   }
 
   return (
