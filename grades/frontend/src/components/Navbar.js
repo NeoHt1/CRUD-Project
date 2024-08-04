@@ -1,8 +1,10 @@
 // src/components/Navbar.js
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const { isAuthenticated, logout } = useAuth();
   const isLoggedIn = !!localStorage.getItem('token'); // Check if token exists
 
   return (
