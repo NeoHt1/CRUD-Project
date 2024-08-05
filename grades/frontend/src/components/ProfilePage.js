@@ -1,18 +1,20 @@
 // src/components/ProfilePage.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../contexts/AuthContext'; // Import your authentication context
-import './ProfilePage.css'; // Ensure this file exists for styling
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom'; // Update import
+import './ProfilePage.css';
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { isAuthenticated } = useAuth(); // Extract authentication status
+  const [error, setError] = useState('');
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate(); // Update usage
 
   useEffect(() => {
     if (!isAuthenticated) {
-      window.location.href = '/signin'; // Redirect to signin if not authenticated
+      navigate('/signin'); // Redirect if not authenticated
       return;
     }
 
@@ -32,19 +34,11 @@ const ProfilePage = () => {
     };
 
     fetchProfile();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]); // Include navigate in dependencies
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!profile) {
-    return <div>No profile data available</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!profile) return <div>No profile data available</div>;
 
   return (
     <div className="profile-page">
@@ -52,7 +46,7 @@ const ProfilePage = () => {
       <div className="profile-details">
         <p><strong>Name:</strong> {profile.name}</p>
         <p><strong>Student ID:</strong> {profile.studentID}</p>
-        <p><strong>Password:</strong> {profile.password}</p>
+        {/* Exclude password from being displayed for security reasons */}
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 // src/components/GradesPage.js
+// src/components/GradesPage.js
 import React, { useEffect, useState } from 'react';
-import { getGrades } from '../api/grades';
+import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import './GradesPage.css';
 
-const Grades = () => {
+const GradesPage = () => {
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -19,9 +20,14 @@ const Grades = () => {
 
     const fetchGrades = async () => {
       try {
-        const response = await getGrades(user.studentID);
+        const response = await axios.get(`/api/grades/${user.id}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
         setGrades(response.data);
       } catch (error) {
+        console.error('Error fetching grades:', error); // For debugging
         setError('Error fetching grades');
       } finally {
         setLoading(false);
@@ -40,27 +46,23 @@ const Grades = () => {
       <table className="grades-table">
         <thead>
           <tr>
-            <th>Math</th>
-            <th>Science</th>
-            <th>English</th>
-            <th>Gym</th>
-            <th>Art</th>
+            <th>Course</th>
+            <th>Grade</th>
+            <th>Semester</th>
           </tr>
         </thead>
         <tbody>
           {grades.length > 0 ? (
             grades.map((grade, index) => (
               <tr key={index}>
-                <td>{grade.math}</td>
-                <td>{grade.science}</td>
-                <td>{grade.english}</td>
-                <td>{grade.gym}</td>
-                <td>{grade.art}</td>
+                <td>{grade.course}</td>
+                <td>{grade.grade}</td>
+                <td>{grade.semester}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="5">No grades available</td>
+              <td colSpan="3">No grades available</td>
             </tr>
           )}
         </tbody>
@@ -69,4 +71,4 @@ const Grades = () => {
   );
 };
 
-export default Grades;
+export default GradesPage;
